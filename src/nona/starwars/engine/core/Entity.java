@@ -3,10 +3,10 @@ package nona.starwars.engine.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity {
+public abstract class Entity {
 
-    private Entity parent;
-    private List<Entity> children;
+    protected Entity parent;
+    protected List<Entity> children;
 
     public Entity() {
         children = new ArrayList<Entity>();
