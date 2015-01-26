@@ -1,8 +1,13 @@
 package nona.starwars.engine.core;
 
-import nona.starwars.engine.rendering.Window;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.util.Arrays;
 
-public class CoreEngine implements Runnable {
+public class CoreEngine extends Canvas implements Runnable {
 
     private boolean running;
     private Thread thread;
@@ -11,12 +16,37 @@ public class CoreEngine implements Runnable {
 
     private Game game;
 
-    private Window window;
+    private Dimension dimension;
+    private JPanel panel;
+    private JFrame frame;
+
+    private BufferStrategy bufferStrategy;
+    private Graphics2D graphics;
+    private BufferedImage image;
+    private byte[] raster;
 
     public CoreEngine(Game game, int fps) {
+        super();
+        this.dimension = new Dimension(game.getWindowWidth(), game.getWindowHeight());
         this.game = game;
         this.fps = (double)fps;
-        this.window = new Window(game.getWindowWidth(), game.getWindowHeight(), game.getWindowTitle());
+
+        setPreferredSize(dimension);
+        setMinimumSize(dimension);
+        setMaximumSize(dimension);
+
+        panel = new JPanel(new BorderLayout());
+        panel.add(this, BorderLayout.CENTER);
+
+        frame = new JFrame(game.getWindowTitle());
+        frame.setContentPane(panel);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);
+
+        image = new BufferedImage((int)dimension.getWidth(), (int)dimension.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        raster = ((DataBufferByte)image.getRaster().getDataBuffer()).getData();
 
         running = false;
 
@@ -81,7 +111,19 @@ public class CoreEngine implements Runnable {
     }
 
     private void render() {
+        if(bufferStrategy == null) {
+            createBufferStrategy(2);
+            bufferStrategy = getBufferStrategy();
+        }
+
+        Arrays.fill(raster, (byte)0);
+
         game.render();
-        window.update();
+
+        graphics = (Graphics2D)bufferStrategy.getDrawGraphics();
+        graphics.drawImage(image, 0, 0, dimension.width, dimension.height, null);
+        graphics.dispose();
+
+        bufferStrategy.show();
     }
 }
