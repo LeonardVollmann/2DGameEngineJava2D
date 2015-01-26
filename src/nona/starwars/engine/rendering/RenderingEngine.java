@@ -9,17 +9,13 @@ public class RenderingEngine {
     }
 
     public void draw(Bitmap bitmap, Bitmap destination, int x, int y) {
-        int xmax = bitmap.getWidth() < destination.getWidth() ? bitmap.getWidth() : destination.getWidth();
-        int ymax = bitmap.getHeight() < destination.getHeight() ? bitmap.getHeight() : destination.getHeight();
-        int xCount = 0;
-        int yCount = 0;
-        for(int i = x; i < xmax; i++) {
-            xCount++;
-            for(int j = y; j < ymax; j++) {
-                yCount++;
+        for(int xx = x; xx < bitmap.getWidth(); xx++) {
+            if(xx >= destination.getWidth() || xx < 0) continue;
+            for(int yy = y; yy < bitmap.getHeight(); yy++) {
+                if(yy >= destination.getHeight() || yy < 0) continue;
 
-                int locationOnDestination = i + j * destination.getWidth();
-                int locationOnBitmap = xCount + yCount * bitmap.getWidth();
+                int locationOnDestination = xx + yy * destination.getWidth();
+                int locationOnBitmap = (xx - x) + (yy - y) * bitmap.getWidth();
 
                 destination.setComponent(locationOnDestination + 0, bitmap.getComponent(locationOnBitmap + 0));
                 destination.setComponent(locationOnDestination + 1, bitmap.getComponent(locationOnBitmap + 1));
