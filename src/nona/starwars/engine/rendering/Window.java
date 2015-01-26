@@ -34,7 +34,6 @@ public class Window extends Canvas {
         frame = new JFrame(title);
         frame.setContentPane(panel);
         frame.pack();
-//        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);
