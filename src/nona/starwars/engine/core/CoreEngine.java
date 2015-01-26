@@ -1,5 +1,7 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.rendering.Window;
+
 public class CoreEngine implements Runnable {
 
     private boolean running;
@@ -9,13 +11,17 @@ public class CoreEngine implements Runnable {
 
     private Game game;
 
-    public CoreEngine(Game game) {
+    private Window window;
+
+    public CoreEngine(Game game, int fps) {
+        this.game = game;
+        this.fps = (double)fps;
+        this.window = new Window(game.getWindowWidth(), game.getWindowHeight(), game.getWindowTitle());
+
         running = false;
 
         thread = new Thread(this);
         thread.start();
-
-        this.game = game;
     }
 
     public void start() {
@@ -28,37 +34,41 @@ public class CoreEngine implements Runnable {
     }
 
     public void run() {
-        double frameTime = Time.SECOND / fps;
+        long lastTime = Time.getTimeNano();
+        long now;
+        double nsPerUpdate = Time.SECOND / fps;
+        double delta = 0;
+        long lastTimeMillis = Time.getTimeMillis();
+        int updates = 0;
         int frames = 0;
-        double frameCounterTime = 0.0;
-        double time_0 = Time.getTime();
-        double time_1;
-        double delta;
-        double unprocessed = 0.0;
+		boolean shouldrender = false;
 
         while(running) {
-            time_1 = Time.getTime();
-            delta = time_1 - time_0;
-            time_0 = time_1;
+            now = System.nanoTime();
 
-            unprocessed += delta;
-            frameCounterTime += delta;
+            delta += (now - lastTime) / nsPerUpdate;
 
-            while (unprocessed >= frameTime) {
-                unprocessed -= frameTime;
-
-                input();
+            while(delta > 1) {
+                delta--;
                 update();
+                updates++;
+				shouldrender = true;
             }
 
-            if (frameCounterTime >= 1) {
-                System.out.println(1000.0 / frames + " ms (" + frames + " fps)");
-                frameCounterTime = 0;
+			if(shouldrender) {
+                render();
+                frames++;
+				shouldrender = false;
+            }
+
+            lastTime = now;
+
+            if(System.currentTimeMillis() - lastTimeMillis >= 1000) {
+                lastTimeMillis += 1000;
+                System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
+                updates = 0;
                 frames = 0;
             }
-
-            render();
-            frames++;
         }
     }
 
@@ -72,5 +82,6 @@ public class CoreEngine implements Runnable {
 
     private void render() {
         game.render();
+        window.update();
     }
 }

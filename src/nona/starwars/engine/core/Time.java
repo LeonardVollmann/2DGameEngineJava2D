@@ -11,4 +11,8 @@ public class Time {
     public static long getTimeNano() {
         return System.nanoTime();
     }
+
+    public static long getTimeMillis() {
+        return System.currentTimeMillis();
+    }
 }
