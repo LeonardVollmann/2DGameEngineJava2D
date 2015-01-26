@@ -7,14 +7,20 @@ public abstract class Entity {
 
     protected Entity parent;
     protected List<Entity> children;
+    protected List<EntityComponent> components;
 
     public Entity() {
         children = new ArrayList<Entity>();
+        components = new ArrayList<EntityComponent>();
     }
 
     public void processInputAll() {
         for(Entity child : children) {
             child.processInputAll();
+        }
+
+        for(EntityComponent component : components) {
+            component.processInput();
         }
     }
 
@@ -22,11 +28,19 @@ public abstract class Entity {
         for(Entity child : children) {
             child.updateAll();
         }
+
+        for(EntityComponent component : components) {
+            component.update();
+        }
     }
 
     public void renderAll() {
         for(Entity child : children) {
             child.renderAll();
+        }
+
+        for(EntityComponent component : components) {
+            component.render();
         }
     }
 
