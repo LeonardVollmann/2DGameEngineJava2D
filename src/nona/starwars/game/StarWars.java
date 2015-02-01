@@ -14,6 +14,9 @@ public class StarWars extends Game {
         windowWidth = 1080;
         windowHeight = 720;
         windowTitle = "Star Wars";
+
+        bitmap = new Bitmap(64, 64);
+        bitmap.randomize();
     }
 
     @Override
@@ -30,7 +33,8 @@ public class StarWars extends Game {
     public void render(RenderContext target) {
         root.renderAll(target);
 
-        target.fillRect(0, 0, 1, 1, (byte)0xF1, (byte)0xF1, (byte)0x00, (byte)0xF1);
+//        target.fillRect(0, 0, 1, 1, (byte)0xF1, (byte)0xF1, (byte)0x00, (byte)0xF1);
+        target.draw(bitmap, 0, 0, 1, 1);
     }
 
 }
