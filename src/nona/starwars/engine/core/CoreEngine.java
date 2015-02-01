@@ -13,8 +13,7 @@ public class CoreEngine extends Canvas implements Runnable {
     private boolean running;
     private Thread thread;
 
-    private int fps;
-    private float delta = 0;
+    private double fps;
 
     private Game game;
 
@@ -72,7 +71,8 @@ public class CoreEngine extends Canvas implements Runnable {
     public void run() {
         long lastTime = System.nanoTime();
         long now;
-        double nsPerUpdate = Time.SECOND / (double)fps;
+        double nsPerUpdate = Time.SECOND / fps;
+        double secondsPerUpdate = 1.0 / fps;
         double unprocessed = 0;
         long lastTimeMillis = System.currentTimeMillis();
         int updates = 0;
@@ -82,12 +82,11 @@ public class CoreEngine extends Canvas implements Runnable {
         while(running) {
             now = System.nanoTime();
 
-            delta = (now - lastTime) / (float)Time.SECOND;
             unprocessed += (now - lastTime) / nsPerUpdate;
 
             while(unprocessed > 1) {
                 unprocessed--;
-                update();
+                update(secondsPerUpdate);
                 updates++;
 				shouldRender = true;
             }
@@ -113,8 +112,8 @@ public class CoreEngine extends Canvas implements Runnable {
         game.input();
     }
 
-    private void update() {
-        game.update(delta);
+    private void update(double delta) {
+        game.update((float)delta);
     }
 
     private void render() {
@@ -134,14 +133,6 @@ public class CoreEngine extends Canvas implements Runnable {
         graphics.dispose();
 
         bufferStrategy.show();
-    }
-
-    public int getFPS() {
-        return fps;
-    }
-
-    public float getFrameTime() {
-        return 1.0f / (float)fps;
     }
 
 }
