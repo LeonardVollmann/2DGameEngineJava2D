@@ -49,9 +49,11 @@ public class Bitmap {
         Arrays.fill(pixelComponents, shade);
     }
 
-    public void randomize() {
+    public Bitmap randomize() {
         Random random = new Random();
         random.nextBytes(pixelComponents);
+
+        return this;
     }
 
     public int getWidth() {

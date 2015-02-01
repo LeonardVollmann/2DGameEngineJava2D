@@ -32,7 +32,7 @@ public class RenderContext extends Bitmap {
         }
     }
 
-    public void draw(Bitmap image, int xCenter, int yCenter, float imageWidth, float imageHeight) {
+    public void draw(Bitmap image, float xCenter, float yCenter, float imageWidth, float imageHeight) {
         float xStart = xCenter - imageWidth / 2;
         float yStart = yCenter - imageHeight / 2;
         float xEnd = xStart + imageWidth;
@@ -80,10 +80,6 @@ public class RenderContext extends Bitmap {
 			}
 			imageY += imageYStep;
 		}
-    }
-
-    private void fillRectInternal(int xStart, int yStart, int xEnd, int yEnd,
-                                  byte a, byte b, byte g, byte r) {
     }
 
 }

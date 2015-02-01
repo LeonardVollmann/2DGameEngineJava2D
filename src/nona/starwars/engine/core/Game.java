@@ -26,6 +26,7 @@ public abstract class Game {
 
     public void setEngine(CoreEngine engine) {
         this.engine = engine;
+        root.setEngine(engine);
     }
 
     public int getWindowWidth() {

@@ -13,7 +13,7 @@ public class CoreEngine extends Canvas implements Runnable {
     private boolean running;
     private Thread thread;
 
-    private double fps;
+    private int fps;
 
     private Game game;
 
@@ -32,7 +32,7 @@ public class CoreEngine extends Canvas implements Runnable {
         super();
         this.dimension = new Dimension(game.getWindowWidth(), game.getWindowHeight());
         this.game = game;
-        this.fps = (double)fps;
+        this.fps = fps;
 
         setPreferredSize(dimension);
         setMinimumSize(dimension);
@@ -71,7 +71,7 @@ public class CoreEngine extends Canvas implements Runnable {
     public void run() {
         long lastTime = Time.getTimeNano();
         long now;
-        double nsPerUpdate = Time.SECOND / fps;
+        double nsPerUpdate = Time.SECOND / (double)fps;
         double delta = 0;
         long lastTimeMillis = Time.getTimeMillis();
         int updates = 0;
@@ -132,5 +132,13 @@ public class CoreEngine extends Canvas implements Runnable {
         graphics.dispose();
 
         bufferStrategy.show();
+    }
+
+    public int getFPS() {
+        return fps;
+    }
+
+    public float getFrameTime() {
+        return 1.0f / (float)fps;
     }
 }

@@ -6,12 +6,16 @@ public abstract class EntityComponent {
 
     protected Entity entity;
 
-    public abstract void processInput();
-    public abstract void update();
-    public abstract void render(RenderContext target);
+    public void processInput() {}
+    public void update() {}
+    public void render(RenderContext target) {}
 
     public Entity getEntity() {
         return entity;
+    }
+
+    public Vector2f getPosition() {
+        return entity.getPosition();
     }
 
     public void setEntity(Entity entity) {

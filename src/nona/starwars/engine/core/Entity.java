@@ -7,13 +7,19 @@ import java.util.List;
 
 public class Entity {
 
-    protected Entity parent;
-    protected List<Entity> children;
-    protected List<EntityComponent> components;
+    private Entity parent;
+    private List<Entity> children;
+    private List<EntityComponent> components;
+
+    private Vector2f position;
+
+    private CoreEngine engine;
 
     public Entity() {
         children = new ArrayList<Entity>();
         components = new ArrayList<EntityComponent>();
+
+        position = new Vector2f();
     }
 
     public void processInputAll() {
@@ -62,6 +68,22 @@ public class Entity {
 
     public void setParent(Entity parent) {
         this.parent = parent;
+    }
+
+    public Vector2f getPosition() {
+        return position;
+    }
+
+    public CoreEngine getEngine() {
+        return engine;
+    }
+
+    public void setPosition(Vector2f position) {
+        this.position = position;
+    }
+
+    public void setEngine(CoreEngine engine) {
+        this.engine = engine;
     }
 
 }
