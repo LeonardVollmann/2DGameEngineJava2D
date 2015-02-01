@@ -17,7 +17,7 @@ public abstract class Game {
     }
 
     public abstract void input();
-    public abstract void update();
+    public abstract void update(float delta);
     public abstract void render(RenderContext target);
 
     public CoreEngine getEngine() {

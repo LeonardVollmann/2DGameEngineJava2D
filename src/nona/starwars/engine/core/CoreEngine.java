@@ -14,6 +14,7 @@ public class CoreEngine extends Canvas implements Runnable {
     private Thread thread;
 
     private int fps;
+    private float delta = 0;
 
     private Game game;
 
@@ -69,11 +70,11 @@ public class CoreEngine extends Canvas implements Runnable {
     }
 
     public void run() {
-        long lastTime = Time.getTimeNano();
+        long lastTime = System.nanoTime();
         long now;
         double nsPerUpdate = Time.SECOND / (double)fps;
-        double delta = 0;
-        long lastTimeMillis = Time.getTimeMillis();
+        double unprocessed = 0;
+        long lastTimeMillis = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
 		boolean shouldRender = false;
@@ -81,10 +82,11 @@ public class CoreEngine extends Canvas implements Runnable {
         while(running) {
             now = System.nanoTime();
 
-            delta += (now - lastTime) / nsPerUpdate;
+            delta = (now - lastTime) / (float)Time.SECOND;
+            unprocessed += (now - lastTime) / nsPerUpdate;
 
-            while(delta > 1) {
-                delta--;
+            while(unprocessed > 1) {
+                unprocessed--;
                 update();
                 updates++;
 				shouldRender = true;
@@ -96,14 +98,14 @@ public class CoreEngine extends Canvas implements Runnable {
                 shouldRender = false;
             }
 
-            lastTime = now;
-
             if(System.currentTimeMillis() - lastTimeMillis >= 1000) {
                 lastTimeMillis += 1000;
                 System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
                 updates = 0;
                 frames = 0;
             }
+
+            lastTime = now;
         }
     }
 
@@ -112,7 +114,7 @@ public class CoreEngine extends Canvas implements Runnable {
     }
 
     private void update() {
-        game.update();
+        game.update(delta);
     }
 
     private void render() {
@@ -141,4 +143,5 @@ public class CoreEngine extends Canvas implements Runnable {
     public float getFrameTime() {
         return 1.0f / (float)fps;
     }
+
 }

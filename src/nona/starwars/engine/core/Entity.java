@@ -32,13 +32,13 @@ public class Entity {
         }
     }
 
-    public void updateAll() {
+    public void updateAll(float delta) {
         for(Entity child : children) {
-            child.updateAll();
+            child.updateAll(delta);
         }
 
         for(EntityComponent component : components) {
-            component.update();
+            component.update(delta);
         }
     }
 

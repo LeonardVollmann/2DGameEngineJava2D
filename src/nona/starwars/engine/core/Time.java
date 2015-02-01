@@ -8,11 +8,4 @@ public class Time {
         return System.nanoTime() / SECOND;
     }
 
-    public static long getTimeNano() {
-        return System.nanoTime();
-    }
-
-    public static long getTimeMillis() {
-        return System.currentTimeMillis();
-    }
 }

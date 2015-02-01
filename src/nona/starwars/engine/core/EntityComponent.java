@@ -7,7 +7,7 @@ public abstract class EntityComponent {
     protected Entity entity;
 
     public void processInput() {}
-    public void update() {}
+    public void update(float delta) {}
     public void render(RenderContext target) {}
 
     public Entity getEntity() {

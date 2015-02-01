@@ -1,7 +1,6 @@
 package nona.starwars.engine.components;
 
 import nona.starwars.engine.core.EntityComponent;
-import nona.starwars.engine.core.Time;
 import nona.starwars.engine.rendering.Bitmap;
 import nona.starwars.engine.rendering.RenderContext;
 
@@ -13,21 +12,16 @@ public class SpriteComponent extends EntityComponent {
     private int currentImage = 0;
 
     private float interval;
-    private double lastTime;
-    private double now;
-    private double passedTime;
+    private float passedTime;
 
     public SpriteComponent(ArrayList<Bitmap> images, float interval) {
         this.images = images;
         this.interval = interval;
-
-        lastTime = Time.getTime();
     }
 
     @Override
-    public void update() {
-        now = Time.getTime();
-        passedTime += now - lastTime;
+    public void update(float delta) {
+        passedTime += delta;
 
         if(passedTime >= interval) {
             passedTime = 0;
@@ -38,8 +32,6 @@ public class SpriteComponent extends EntityComponent {
                 currentImage++;
             }
         }
-
-        lastTime = now;
     }
 
     @Override

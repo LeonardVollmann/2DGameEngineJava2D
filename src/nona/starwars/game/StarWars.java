@@ -34,8 +34,8 @@ public class StarWars extends Game {
     }
 
     @Override
-    public void update() {
-        root.updateAll();
+    public void update(float delta) {
+        root.updateAll(delta);
     }
 
     @Override
