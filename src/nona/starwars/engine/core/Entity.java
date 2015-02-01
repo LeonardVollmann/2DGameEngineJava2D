@@ -1,9 +1,11 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.rendering.RenderContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity {
+public class Entity {
 
     protected Entity parent;
     protected List<Entity> children;
@@ -34,19 +36,28 @@ public abstract class Entity {
         }
     }
 
-    public void renderAll() {
+    public void renderAll(RenderContext target) {
         for(Entity child : children) {
-            child.renderAll();
+            child.renderAll(target);
         }
 
         for(EntityComponent component : components) {
-            component.render();
+            component.render(target);
         }
     }
 
-    public void addChild(Entity child) {
-        children.add(child);
+    public Entity addChild(Entity child) {
         child.setParent(this);
+        children.add(child);
+
+        return this;
+    }
+
+    public Entity addComponent(EntityComponent component) {
+        component.setEntity(this);
+        components.add(component);
+
+        return this;
     }
 
     public void setParent(Entity parent) {

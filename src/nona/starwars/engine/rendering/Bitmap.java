@@ -1,13 +1,14 @@
 package nona.starwars.engine.rendering;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Bitmap {
 
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
-    private byte[] pixelComponents;
+    protected byte[] pixelComponents;
 
     public Bitmap(int width, int height) {
         this.width = width;
@@ -17,12 +18,25 @@ public class Bitmap {
 
     public void copy(byte[] destination) {
         for(int i = 0; i < destination.length; i++) {
-            destination[i] = getComponent(i);
+            destination[i] = pixelComponents[i];
+        }
+    }
+
+    public void copyToBGRArray(byte[] array) {
+        for(int i = 0; i < width * height; i++) {
+            array[i * 3] = pixelComponents[i * 4 + 1];
+            array[i * 3 + 1] = pixelComponents[i * 4 + 2];
+            array[i * 3 + 2] = pixelComponents[i * 4 + 3];
         }
     }
 
     public void clear(byte shade) {
         Arrays.fill(pixelComponents, shade);
+    }
+
+    public void randomize() {
+        Random random = new Random();
+        random.nextBytes(pixelComponents);
     }
 
     public int getWidth() {
@@ -33,23 +47,12 @@ public class Bitmap {
         return height;
     }
 
-    public byte[] getPixelComponents() {
-        return pixelComponents;
-    }
-
-    public byte[] getPixel(int x, int y) {
-        return Arrays.copyOfRange(pixelComponents, x + y * width, x + y * width + 3);
-    }
-
     public void setPixel(int x, int y, byte a, byte b, byte g, byte r) {
-        pixelComponents[x + y * width + 0] = a;
-        pixelComponents[x + y * width + 1] = b;
-        pixelComponents[x + y * width + 2] = g;
-        pixelComponents[x + y * width + 3] = r;
-    }
-
-    public void setPixel(int x, int y, byte[] pixel) {
-        setPixel(x, y, pixel[0], pixel[1], pixel[2], pixel[3]);
+        int location = (x + y * width) * 4;
+        pixelComponents[location + 0] = a;
+        pixelComponents[location + 1] = b;
+        pixelComponents[location + 2] = g;
+        pixelComponents[location + 3] = r;
     }
 
     public byte getComponent(int location) {

@@ -1,5 +1,7 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.rendering.RenderContext;
+
 public abstract class Game {
 
     protected CoreEngine engine;
@@ -10,9 +12,13 @@ public abstract class Game {
 
     protected Entity root;
 
+    public Game() {
+        root = new Entity();
+    }
+
     public abstract void input();
     public abstract void update();
-    public abstract void render();
+    public abstract void render(RenderContext target);
 
     public CoreEngine getEngine() {
         return engine;
@@ -36,6 +42,10 @@ public abstract class Game {
 
     public Entity getRootEntity() {
         return root;
+    }
+
+    public void add(Entity entity) {
+        root.addChild(entity);
     }
 
 }

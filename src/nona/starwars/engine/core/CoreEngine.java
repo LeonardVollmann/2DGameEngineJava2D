@@ -1,11 +1,12 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.rendering.RenderContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.util.Arrays;
 
 public class CoreEngine extends Canvas implements Runnable {
 
@@ -24,6 +25,8 @@ public class CoreEngine extends Canvas implements Runnable {
     private Graphics2D graphics;
     private BufferedImage image;
     private byte[] raster;
+
+    private RenderContext frameBuffer;
 
     public CoreEngine(Game game, int fps) {
         super();
@@ -45,13 +48,15 @@ public class CoreEngine extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        image = new BufferedImage((int)dimension.getWidth(), (int)dimension.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_3BYTE_BGR);
         raster = ((DataBufferByte)image.getRaster().getDataBuffer()).getData();
 
         running = false;
 
         thread = new Thread(this);
         thread.start();
+
+        frameBuffer = new RenderContext(getWidth(), getHeight());
     }
 
     public void start() {
@@ -71,7 +76,7 @@ public class CoreEngine extends Canvas implements Runnable {
         long lastTimeMillis = Time.getTimeMillis();
         int updates = 0;
         int frames = 0;
-		boolean shouldrender = false;
+		boolean shouldRender = false;
 
         while(running) {
             now = System.nanoTime();
@@ -82,13 +87,13 @@ public class CoreEngine extends Canvas implements Runnable {
                 delta--;
                 update();
                 updates++;
-				shouldrender = true;
+				shouldRender = true;
             }
 
-			if(shouldrender) {
+			if(shouldRender) {
                 render();
                 frames++;
-				shouldrender = false;
+                shouldRender = false;
             }
 
             lastTime = now;
@@ -116,9 +121,11 @@ public class CoreEngine extends Canvas implements Runnable {
             bufferStrategy = getBufferStrategy();
         }
 
-        Arrays.fill(raster, (byte)0);
+        frameBuffer.clear((byte)0x00);
 
-        game.render();
+        game.render(frameBuffer);
+
+        frameBuffer.copyToBGRArray(raster);
 
         graphics = (Graphics2D)bufferStrategy.getDrawGraphics();
         graphics.drawImage(image, 0, 0, dimension.width, dimension.height, null);
