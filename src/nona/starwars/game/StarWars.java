@@ -19,6 +19,7 @@ public class StarWars extends Game {
         windowHeight = 720;
         windowTitle = "Star Wars";
 
+        /*
         bitmaps = new ArrayList<Bitmap>();
         bitmaps.add(new Bitmap(64, 64).randomize());
         bitmaps.add(new Bitmap(64, 64).randomize());
@@ -26,6 +27,9 @@ public class StarWars extends Game {
         bitmaps.add(new Bitmap(64, 64).randomize());
 
         add(new Entity().addComponent(new SpriteComponent(bitmaps, 1)));
+        */
+
+        add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
     }
 
     @Override

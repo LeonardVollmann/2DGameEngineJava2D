@@ -1,5 +1,8 @@
 package nona.starwars.engine.rendering;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -14,6 +17,36 @@ public class Bitmap {
         this.width = width;
         this.height = height;
         this.pixelComponents = new byte[width * height * 4];
+    }
+
+    public Bitmap(String fileName) {
+        fileName = "/" + fileName;
+
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(Bitmap.class.getResourceAsStream(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error while loading image: " + fileName);
+        }
+
+        this.width = image.getWidth();
+        this.height = image.getHeight();
+        this.pixelComponents = new byte[width * height * 4];
+
+        for(int j = 0; j < height; j++) {
+            for(int i = 0; i < width; i++) {
+                int index = i + j * width;
+                int argb = image.getRGB(i, j);
+
+                byte a = (byte)(0xFF & (argb >> 24));
+                byte r = (byte)(0xFF & (argb >> 16));
+                byte g = (byte)(0xFF & (argb >> 8));
+                byte b = (byte)(0xFF & argb);
+
+                setPixel(i, j, a, b, g, r);
+            }
+        }
     }
 
     public void copy(byte[] destination) {

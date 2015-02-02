@@ -19,6 +19,12 @@ public class SpriteComponent extends EntityComponent {
         this.interval = interval;
     }
 
+    public SpriteComponent(Bitmap image) {
+        this.images = new ArrayList<Bitmap>();
+        images.add(image);
+        this.interval = Float.MAX_VALUE-10;
+    }
+
     @Override
     public void update(float delta) {
         passedTime += delta;
