@@ -26,16 +26,18 @@ public class StarWars extends Game {
 
         add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
 
-        Entity test = new Entity(-1, -1, 1, 1);
-        QuadTree quadTree = new QuadTree(test, new AABB(-100, -100, 100, 100));
+        QuadTree quadTree = new QuadTree(new AABB(-100, -100, 100, 100), 2);
 
         quadTree.add(new Entity(new Vector2f(-3, -3), new Vector2f(0, 0)));
         quadTree.add(new Entity(new Vector2f(-3, 0), new Vector2f(0, 3)));
         quadTree.add(new Entity(new Vector2f(-1, -1), new Vector2f(1, 1)));
+        quadTree.add(new Entity(new Vector2f(-5, -5), new Vector2f(0, 0)));
+        quadTree.add(new Entity(new Vector2f(-2, -3), new Vector2f(-1, -1)));
 
         quadTree.print();
 
-        HashSet set = quadTree.queryRange(new AABB(-2, -2, 0, 0));
+        HashSet<Entity> set = new HashSet<Entity>();
+        quadTree.queryRange(new AABB(-2, -2, 0, 0), set);
 
         Iterator it = set.iterator();
         while(it.hasNext()) {

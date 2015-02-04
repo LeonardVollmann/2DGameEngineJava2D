@@ -2,17 +2,19 @@ package nona.starwars.engine.core;
 
 import nona.starwars.engine.physics.AABB;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class QuadTree {
 
     private QuadTree[] nodes;
-    private Entity entity;
+    private Entity[] entities;
+    private int numEntities;
     private AABB aabb;
 
-    public QuadTree(Entity entity, AABB aabb) {
+    public QuadTree(AABB aabb, int maxEntities) {
         this.nodes = new QuadTree[4];
-        this.entity = entity;
+        this.entities = new Entity[maxEntities];
+        this.numEntities = 0;
         this.aabb = aabb;
     }
 
@@ -26,56 +28,83 @@ public class QuadTree {
             prefix += "-";
         }
 
-        System.out.println(prefix + location + ": " + entity);
+        for(int i = 0; i < numEntities; i++) {
+            System.out.println(prefix + location + i + ": " + entities[i]);
+        }
 
         if (nodes[0] != null) {
-            nodes[0].print(depth + 1, "NW");
+            nodes[0].print(depth + 1, "NW ");
         }
         if (nodes[1] != null) {
-            nodes[1].print(depth + 1, "NE");
+            nodes[1].print(depth + 1, "NE ");
         }
         if (nodes[2] != null) {
-            nodes[2].print(depth + 1, "SW");
+            nodes[2].print(depth + 1, "SW ");
         }
         if (nodes[3] != null) {
-            nodes[3].print(depth + 1, "SE");
+            nodes[3].print(depth + 1, "SE ");
         }
     }
 
-    public HashSet<Entity> queryRange(AABB range) {
-        HashSet<Entity> entities = new HashSet<Entity>();
-
-        queryRangeInternal(range, entities);
-
-        return entities;
-    }
-
-    private void queryRangeInternal(AABB range, HashSet<Entity> entities) {
+    public Set<Entity> queryRange(AABB range, Set<Entity> result) {
         if(!aabb.intersectAABB(range)) {
-            return;
+            return result;
         }
 
-        if(entity.getAABB().intersectAABB(range)) {
-            entities.add(entity);
+        for(int i = 0; i < numEntities; i++) {
+            if(entities[i].getAABB().intersectAABB(range)) {
+                result.add(entities[i]);
+            }
         }
 
         for(int i = 0; i < 4; i++) {
             if(nodes[i] != null) {
-                nodes[i].queryRangeInternal(range, entities);
+                nodes[i].queryRange(range, result);
             }
         }
+
+        return result;
+    }
+
+    public Set<Entity> getAll(Set<Entity> result) {
+        return queryRange(aabb, result);
     }
 
     public void add(Entity entity) {
         if(entity.getAABB().intersectAABB(aabb)) {
-            addToChild(entity);
+            if(numEntities < entities.length) {
+                entities[numEntities] = entity;
+                numEntities++;
+            } else {
+                addToChild(entity);
+            }
         } else {
             System.err.println("Error: AABB not in quad tree!");
             System.exit(1);
         }
     }
 
-    public void addToChild(Entity entity) {
+    public boolean remove(Entity entity) {
+        if (!entity.getAABB().intersectAABB(aabb)) {
+            return false;
+        }
+
+        for (int i = 0; i < numEntities; i++) {
+            if (entities[i] == entity) {
+                removeEntityFromArray(i);
+            }
+        }
+
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] != null && nodes[i].remove(entity)) {
+                nodes[i] = null;
+            }
+        }
+
+        return isEmpty();
+    }
+
+    private void addToChild(Entity entity) {
         float halfXLength = aabb.getWidth() / 2.0f;
         float halfYLength = aabb.getHeight() / 2.0f;
 
@@ -96,11 +125,29 @@ public class QuadTree {
     private void tryToAddToChildNode(Entity entity, float minX, float minY, float maxX, float maxY, int nodeIndex) {
         if(entity.getAABB().intersectRect(minX, minY, maxX, maxY)) {
             if(nodes[nodeIndex] == null) {
-                nodes[nodeIndex] = new QuadTree(entity, new AABB(minX, minY, maxX, maxY));
-            } else {
-                nodes[nodeIndex].addToChild(entity);
+                nodes[nodeIndex] = new QuadTree(new AABB(minX, minY, maxX, maxY), entities.length);
+            }
+
+            nodes[nodeIndex].add(entity);
+        }
+    }
+
+    private void removeEntityFromArray(int index) {
+        for(int i = index + 1; i < numEntities; i++) {
+            entities[i - 1] = entities[i];
+        }
+        entities[numEntities - 1] = null;
+        numEntities--;
+    }
+
+    private boolean isEmpty() {
+        for(int i = 0; i < 4; i++) {
+            if(nodes[i] != null) {
+                return false;
             }
         }
+
+        return numEntities == 0;
     }
 
 }
