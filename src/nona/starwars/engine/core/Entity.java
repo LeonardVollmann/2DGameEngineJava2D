@@ -1,5 +1,6 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.physics.AABB;
 import nona.starwars.engine.rendering.RenderContext;
 
 import java.util.ArrayList;
@@ -11,15 +12,24 @@ public class Entity {
     private List<Entity> children;
     private List<EntityComponent> components;
 
-    private Vector2f position;
+    private AABB aabb;
 
     private CoreEngine engine;
 
-    public Entity() {
+    public Entity(Vector2f min, Vector2f max) {
         children = new ArrayList<Entity>();
         components = new ArrayList<EntityComponent>();
 
-        position = new Vector2f();
+        aabb = new AABB(min, max);
+    }
+
+    public Entity(float xCenter, float yCenter, float width, float height) {
+        this(new Vector2f(xCenter - width / 2.0f, yCenter - height / 2.0f),
+                new Vector2f(xCenter + width / 2.0f, yCenter + height / 2.0f));
+    }
+
+    public Entity() {
+        this(0, 0, 1, 1);
     }
 
     public void processInputAll() {
@@ -70,16 +80,16 @@ public class Entity {
         this.parent = parent;
     }
 
+    public AABB getAABB() {
+        return aabb;
+    }
+
     public Vector2f getPosition() {
-        return position;
+        return aabb.getCenter();
     }
 
     public CoreEngine getEngine() {
         return engine;
-    }
-
-    public void setPosition(Vector2f position) {
-        this.position = position;
     }
 
     public void setEngine(CoreEngine engine) {
