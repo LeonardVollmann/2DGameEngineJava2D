@@ -32,16 +32,6 @@ public class Entity {
         this(0, 0, 1, 1);
     }
 
-    public void processInputAll() {
-        for(Entity child : children) {
-            child.processInputAll();
-        }
-
-        for(EntityComponent component : components) {
-            component.processInput();
-        }
-    }
-
     public void updateAll(float delta) {
         for(Entity child : children) {
             child.updateAll(delta);

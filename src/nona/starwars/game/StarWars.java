@@ -46,11 +46,6 @@ public class StarWars extends Game {
     }
 
     @Override
-    public void input() {
-        root.processInputAll();
-    }
-
-    @Override
     public void update(float delta) {
         root.updateAll(delta);
     }

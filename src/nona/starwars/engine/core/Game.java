@@ -16,7 +16,6 @@ public abstract class Game {
         root = new Entity();
     }
 
-    public abstract void input();
     public abstract void update(float delta);
     public abstract void render(RenderContext target);
 

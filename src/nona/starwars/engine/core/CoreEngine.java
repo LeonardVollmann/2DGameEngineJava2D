@@ -108,10 +108,6 @@ public class CoreEngine extends Canvas implements Runnable {
         }
     }
 
-    private void input() {
-        game.input();
-    }
-
     private void update(double delta) {
         game.update((float)delta);
     }
