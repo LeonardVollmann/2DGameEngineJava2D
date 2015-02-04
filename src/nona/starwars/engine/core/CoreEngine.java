@@ -99,7 +99,7 @@ public class CoreEngine extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - lastTimeMillis >= 1000) {
                 lastTimeMillis += 1000;
-                System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
+                //System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
                 updates = 0;
                 frames = 0;
             }
