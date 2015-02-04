@@ -24,7 +24,7 @@ public class StarWars extends Game {
         windowHeight = 720;
         windowTitle = "Star Wars";
 
-        add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
+        scene.add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
 
         QuadTree quadTree = new QuadTree(new AABB(-100, -100, 100, 100), 2);
 
@@ -47,14 +47,12 @@ public class StarWars extends Game {
 
     @Override
     public void update(float delta) {
-        root.updateAll(delta);
+        scene.update(delta);
     }
 
     @Override
     public void render(RenderContext target) {
-        root.renderAll(target);
-
-//        target.fillRect(0, 0, 1, 1, (byte)0xF1, (byte)0xF1, (byte)0x00, (byte)0xF1);
+        scene.render(target);
     }
 
 }
