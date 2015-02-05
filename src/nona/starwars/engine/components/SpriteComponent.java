@@ -25,6 +25,10 @@ public class SpriteComponent extends EntityComponent {
         this.interval = Float.MAX_VALUE-10;
     }
 
+    public SpriteComponent(String fileName) {
+        this(new Bitmap(fileName));
+    }
+
     @Override
     public void update(float delta) {
         passedTime += delta;
@@ -42,7 +46,7 @@ public class SpriteComponent extends EntityComponent {
 
     @Override
     public void render(RenderContext target) {
-        target.draw(images.get(currentImage), getPosition().getX(), getPosition().getY(), 1, 1);
+        target.draw(images.get(currentImage), getPosition().getX(), getPosition().getY(), getEntity().getAABB().getWidth(), getEntity().getAABB().getHeight());
     }
 
 }

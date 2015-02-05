@@ -11,7 +11,7 @@ public class Scene {
     private QuadTree tree;
 
     public Scene() {
-        tree = new QuadTree(new AABB(-100, -100, 100, 100), 2);
+        tree = new QuadTree(new AABB(-0.1f, -0.1f, 0.1f, 0.1f), 2);
     }
 
     public void add(Entity entity) {

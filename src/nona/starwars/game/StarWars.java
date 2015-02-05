@@ -3,15 +3,11 @@ package nona.starwars.game;
 import nona.starwars.engine.components.SpriteComponent;
 import nona.starwars.engine.core.Entity;
 import nona.starwars.engine.core.Game;
-import nona.starwars.engine.core.QuadTree;
 import nona.starwars.engine.core.Vector2f;
-import nona.starwars.engine.physics.AABB;
 import nona.starwars.engine.rendering.Bitmap;
 import nona.starwars.engine.rendering.RenderContext;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 
 public class StarWars extends Game {
 
@@ -24,9 +20,9 @@ public class StarWars extends Game {
         windowHeight = 720;
         windowTitle = "Star Wars";
 
-        scene.add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
+        //scene.add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));
 
-        QuadTree quadTree = new QuadTree(new AABB(-100, -100, 100, 100), 2);
+        /*QuadTree quadTree = new QuadTree(new AABB(-100, -100, 100, 100), 2);
 
         quadTree.add(new Entity(new Vector2f(-3, -3), new Vector2f(0, 0)));
         quadTree.add(new Entity(new Vector2f(-3, 0), new Vector2f(0, 3)));
@@ -42,7 +38,10 @@ public class StarWars extends Game {
         Iterator it = set.iterator();
         while(it.hasNext()) {
             System.out.println(it.next());
-        }
+        }*/
+
+        scene.add(new Entity(new Vector2f(-0.1f, -0.1f), new Vector2f(0.1f, 0.1f)).addComponent(new SpriteComponent("sprite.png")));
+        scene.add(new Entity(new Vector2f(-0.3f, -0.3f), new Vector2f(-0.2f, -0.2f)).addComponent(new SpriteComponent("sprite.png")));
     }
 
     @Override

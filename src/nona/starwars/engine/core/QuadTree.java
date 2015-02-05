@@ -18,6 +18,13 @@ public class QuadTree {
         this.aabb = aabb;
     }
 
+    public QuadTree(AABB aabb, QuadTree[] nodes, Entity[] entities, int numEntities) {
+        this.aabb = aabb;
+        this.nodes = nodes;
+        this.entities = entities;
+        this.numEntities = numEntities;
+    }
+
     public void print() {
         print(0, "NW");
     }
@@ -79,8 +86,40 @@ public class QuadTree {
                 addToChild(entity);
             }
         } else {
-            System.err.println("Error: AABB not in quad tree!");
-            System.exit(1);
+            QuadTree thisAsNode = new QuadTree(aabb, nodes, entities, numEntities);
+
+            Vector2f direction = entity.getPosition().sub(aabb.getCenter());
+
+            nodes = new QuadTree[4];
+            numEntities = 0;
+            entities = new Entity[entities.length];
+
+            float minX = aabb.getMin().getX();
+            float minY = aabb.getMin().getY();
+            float maxX = aabb.getMax().getX();
+            float maxY = aabb.getMax().getY();
+
+            float width = aabb.getWidth();
+            float height = aabb.getHeight();
+
+            if(direction.getX() >= 0 && direction.getY() < 0) {
+                nodes[0] = thisAsNode;
+                aabb = new AABB(minX, minY - height, maxX + width, maxY);
+            } else if(direction.getX() < 0 && direction.getY() < 0) {
+                nodes[1] = thisAsNode;
+                aabb = new AABB(minX - width, minY - height, maxX, maxY);
+            } else if(direction.getX() >= 0 && direction.getY() >= 0) {
+                nodes[2] = thisAsNode;
+                aabb = new AABB(minX, minY, maxX + width, maxY + height);
+            } else if(direction.getX() < 0 && direction.getY() >= 0) {
+                nodes[3] = thisAsNode;
+                aabb = new AABB(minX - width, minY, maxX, maxY + height);
+            } else {
+                System.err.println("Error: QuadTree expansion calculation failed: dirX = " + direction.getX() + ", dirY = " + direction.getY());
+                System.exit(1);
+            }
+
+            add(entity);
         }
     }
 
