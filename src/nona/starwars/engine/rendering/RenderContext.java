@@ -54,7 +54,8 @@ public class RenderContext extends Bitmap {
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             case TRANSPARENCY_FULL:
-                // TODO: Implement
+                drawImageAlphaBlendedInternal(image, (int) xStart, (int) yStart, (int) xEnd, (int) yEnd,
+                        imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid transparency type!");
@@ -80,9 +81,41 @@ public class RenderContext extends Bitmap {
         for (int j = yStart; j < yEnd; j++) {
             float srcX = imageXStart;
             for (int i = xStart; i < xEnd; i++) {
-                if(image.getNearestAlpha(srcX, srcY) > (byte)0) {
+                if(image.getNearestComponent(srcX, srcY, 0) > (byte)0) {
                     image.copyNearest(this, i, j, srcX, srcY);
                 }
+                srcX += xStep;
+            }
+            srcY += yStep;
+        }
+    }
+
+    public void drawImageAlphaBlendedInternal(Bitmap image, int xStart, int yStart, int xEnd, int yEnd,
+                                  float imageXStart, float imageYStart, float xStep, float yStep) {
+        float srcY = imageYStart;
+        for (int j = yStart; j < yEnd; j++) {
+            float srcX = imageXStart;
+            for (int i = xStart; i < xEnd; i++) {
+                int a = image.getNearestComponent(srcX, srcY, 0) & 0xFF;
+                int b = image.getNearestComponent(srcX, srcY, 1) & 0xFF;
+                int g = image.getNearestComponent(srcX, srcY, 2) & 0xFF;
+                int r = image.getNearestComponent(srcX, srcY, 3) & 0xFF;
+
+                int thisB = getComponent(i, j, 1) & 0xFF;
+                int thisG = getComponent(i, j, 2) & 0xFF;
+                int thisR = getComponent(i, j, 3) & 0xFF;
+
+                int otherAmt = a;
+                int thisAmt = 255 - a;
+                byte newB = (byte)(thisB * thisAmt + b * otherAmt >> 8);
+                byte newG = (byte)(thisG * thisAmt + g * otherAmt >> 8);
+                byte newR = (byte)(thisR * thisAmt + r * otherAmt >> 8);
+
+                int index = (i + j * width) * 4;
+                setComponent(index + 1, newB);
+                setComponent(index + 2, newG);
+                setComponent(index + 3, newR);
+
                 srcX += xStep;
             }
             srcY += yStep;

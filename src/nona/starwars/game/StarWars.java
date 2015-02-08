@@ -43,8 +43,8 @@ public class StarWars extends Game {
         //scene.add(new Entity(new Vector2f(-0.1f, -0.1f), new Vector2f(0.1f, 0.1f)).addComponent(new SpriteComponent("sprite.png")));
         //scene.add(new Entity(new Vector2f(-0.3f, -0.3f), new Vector2f(-0.2f, -0.2f)).addComponent(new SpriteComponent("sprite.png")));
 
-        scene.add(new Entity(new Vector2f(-0.2f, -0.2f), new Vector2f(0.2f, 0.2f)).addComponent(new SpriteComponent(new Bitmap(8, 8).randomize())));
-        scene.add(new Entity(new Vector2f(-0.4f, -0.4f), new Vector2f(0.0f, 0.0f)).addComponent(new SpriteComponent(new Bitmap(8, 8).randomize())));
+        scene.add(new Entity(new Vector2f(-0.2f, -0.2f), new Vector2f(0.2f, 0.2f)).addComponent(new SpriteComponent(new Bitmap(16, 16).randomize())));
+        scene.add(new Entity(new Vector2f(-0.4f, -0.4f), new Vector2f(0.0f, 0.0f)).addComponent(new SpriteComponent(new Bitmap(16, 16).randomize())));
     }
 
     @Override
