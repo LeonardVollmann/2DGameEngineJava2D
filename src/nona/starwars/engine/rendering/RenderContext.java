@@ -50,7 +50,8 @@ public class RenderContext extends Bitmap {
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             case TRANSPARENCY_BASIC:
-                // TODO: Implement
+                drawImageBasicTransparencyInternal(image, (int)xStart, (int)yStart, (int)xEnd, (int)yEnd,
+                        imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             case TRANSPARENCY_FULL:
                 // TODO: Implement
@@ -67,6 +68,21 @@ public class RenderContext extends Bitmap {
             float srcX = imageXStart;
             for (int i = xStart; i < xEnd; i++) {
                 image.copyNearest(this, i, j, srcX, srcY);
+                srcX += xStep;
+            }
+            srcY += yStep;
+        }
+    }
+
+    public void drawImageBasicTransparencyInternal(Bitmap image, int xStart, int yStart, int xEnd, int yEnd,
+                                                   float imageXStart, float imageYStart, float xStep, float yStep) {
+        float srcY = imageYStart;
+        for (int j = yStart; j < yEnd; j++) {
+            float srcX = imageXStart;
+            for (int i = xStart; i < xEnd; i++) {
+                if(image.getNearestAlpha(srcX, srcY) > (byte)0) {
+                    image.copyNearest(this, i, j, srcX, srcY);
+                }
                 srcX += xStep;
             }
             srcY += yStep;

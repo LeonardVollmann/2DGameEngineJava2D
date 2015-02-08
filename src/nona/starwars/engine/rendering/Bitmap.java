@@ -78,6 +78,13 @@ public class Bitmap {
         destination.setComponent(destIndex + 3, pixelComponents[srcIndex + 3]);
     }
 
+    public byte getNearestAlpha(float srcX, float srcY) {
+        int x = (int)(srcX * (width - 1));
+        int y = (int)(srcY * (height - 1));
+
+        return pixelComponents[(x + y * width) * 4];
+    }
+
     public void clear(byte shade) {
         Arrays.fill(pixelComponents, shade);
     }
