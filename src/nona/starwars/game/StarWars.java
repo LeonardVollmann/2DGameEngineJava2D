@@ -16,8 +16,8 @@ public class StarWars extends Game {
     public StarWars() {
         super();
 
-        windowWidth = 1080;
-        windowHeight = 720;
+        windowWidth = 720;
+        windowHeight = 540;
         windowTitle = "Star Wars";
 
         //scene.add(new Entity().addComponent(new SpriteComponent(new Bitmap("sprite.png"))));

@@ -22,7 +22,7 @@ public class CoreEngine extends Canvas implements Runnable {
     private JFrame frame;
 
     private BufferStrategy bufferStrategy;
-    private Graphics2D graphics;
+    private Graphics graphics;
     private BufferedImage image;
     private byte[] raster;
 
@@ -71,13 +71,16 @@ public class CoreEngine extends Canvas implements Runnable {
     public void run() {
         long lastTime = System.nanoTime();
         long now;
+        double unprocessed = 0;
+
         double nsPerUpdate = Time.SECOND / fps;
         double secondsPerUpdate = 1.0 / fps;
-        double unprocessed = 0;
+
+		boolean shouldRender = false;
+
         long lastTimeMillis = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
-		boolean shouldRender = false;
 
         while(running) {
             now = System.nanoTime();
@@ -91,15 +94,15 @@ public class CoreEngine extends Canvas implements Runnable {
 				shouldRender = true;
             }
 
-			if(shouldRender) {
+			//if(shouldRender) {
                 render();
                 frames++;
                 shouldRender = false;
-            }
+            //}
 
-            if(System.currentTimeMillis() - lastTimeMillis >= 1000) {
+            if(System.currentTimeMillis() >= lastTimeMillis) {
                 lastTimeMillis += 1000;
-                //System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
+                System.out.println(1000.0 / frames + " ms per frame (" + frames + " fps, " + updates + " ups)");
                 updates = 0;
                 frames = 0;
             }
@@ -116,6 +119,7 @@ public class CoreEngine extends Canvas implements Runnable {
         if(bufferStrategy == null) {
             createBufferStrategy(2);
             bufferStrategy = getBufferStrategy();
+            graphics = bufferStrategy.getDrawGraphics();
         }
 
         frameBuffer.clear((byte)0x00);
@@ -124,9 +128,7 @@ public class CoreEngine extends Canvas implements Runnable {
 
         frameBuffer.copyToBGRArray(raster);
 
-        graphics = (Graphics2D)bufferStrategy.getDrawGraphics();
         graphics.drawImage(image, 0, 0, dimension.width, dimension.height, null);
-        graphics.dispose();
 
         bufferStrategy.show();
     }
