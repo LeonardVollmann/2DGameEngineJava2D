@@ -124,4 +124,8 @@ public class Bitmap {
         pixelComponents[location] = value;
     }
 
+    public float getAspect() {
+        return width / height;
+    }
+
 }

@@ -21,12 +21,15 @@ public class RenderContext extends Bitmap {
 
 		float halfWidth = width / 2.0f;
 		float halfHeight = height / 2.0f;
-        float scale = halfWidth < halfHeight ? halfWidth : halfHeight;
+        float scale = halfHeight < halfWidth ? halfHeight : halfWidth;
 		
 		float imageXStart = 0.0f;
 		float imageYStart = 0.0f;
 		float imageYStep = 1.0f / (((yEnd * scale) + halfHeight) - ((yStart * scale) + halfHeight));
 		float imageXStep = 1.0f / (((xEnd * scale) + halfWidth) - ((xStart * scale) + halfWidth));
+
+        xStart += 1.0f / ((width - height) / 2.0f);
+        xEnd += 1.0f / ((width - height) / 2.0f);
 
         if(xStart < -1.0f) {
             imageXStart = -((xStart + 1.0f) / (xEnd - xStart));
