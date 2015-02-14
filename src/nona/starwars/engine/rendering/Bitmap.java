@@ -106,7 +106,7 @@ public class Bitmap {
 
     public void setPixel(int x, int y, byte a, byte b, byte g, byte r) {
         int location = (x + y * width) * 4;
-        pixelComponents[location + 0] = a;
+        pixelComponents[location] = a;
         pixelComponents[location + 1] = b;
         pixelComponents[location + 2] = g;
         pixelComponents[location + 3] = r;

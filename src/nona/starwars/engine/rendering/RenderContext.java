@@ -19,30 +19,38 @@ public class RenderContext extends Bitmap {
 		float xEnd = xStart + imageWidth;
 		float yEnd = yStart + imageHeight;
 
-		float halfWidth = getWidth() / 2.0f;
-		float halfHeight = getHeight() / 2.0f;
+		float halfWidth = width / 2.0f;
+		float halfHeight = height / 2.0f;
         float scale = halfWidth < halfHeight ? halfWidth : halfHeight;
 		
 		float imageXStart = 0.0f;
 		float imageYStart = 0.0f;
 		float imageYStep = 1.0f / (((yEnd * scale) + halfHeight) - ((yStart * scale) + halfHeight));
-		float imageXStep = 1.0f / (((xEnd * scale) + halfWidth) - ((xStart * scale) + halfWidth)); 
-		
+		float imageXStep = 1.0f / (((xEnd * scale) + halfWidth) - ((xStart * scale) + halfWidth));
+
+        if(xStart < -1.0f) {
+            imageXStart = -((xStart + 1.0f) / (xEnd - xStart));
+            xStart = -1.0f;
+        } else if(xStart > 1.0f) {
+            imageXStart = -((xStart + 1.0f) / (xEnd - xStart));
+            xStart = 1.0f;
+        }
+
 		if(yStart < -1.0f) {
             imageYStart = -((yStart + 1.0f) / (yEnd - yStart));
-            yStart = 1.0f;
+            yStart = -1.0f;
         } else if(yStart > 1.0f) {
             imageYStart = -((yStart + 1.0f) / (yEnd - yStart));
             yStart = 1.0f;
         }
 
-        Util.clamp(xEnd, -1.0f, 1.0f);
-        Util.clamp(yEnd, -1.0f, 1.0f);
+        xEnd = Util.clamp(xEnd, -1.0f, 1.0f);
+        yEnd = Util.clamp(yEnd, -1.0f, 1.0f);
 
         xStart = (xStart * scale) + halfWidth;
-		yStart = (yStart * scale) + halfHeight;
-		xEnd   = (xEnd * scale) + halfWidth;
-		yEnd   = (yEnd * scale) + halfHeight;
+        yStart = (yStart * scale) + halfHeight;
+        xEnd = (xEnd * scale) + halfWidth;
+        yEnd = (yEnd * scale) + halfHeight;
 
         switch(transparency) {
             case TRANSPARENCY_NONE:
@@ -54,7 +62,7 @@ public class RenderContext extends Bitmap {
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             case TRANSPARENCY_FULL:
-                drawImageAlphaBlendedInternal(image, (int) xStart, (int) yStart, (int) xEnd, (int) yEnd,
+                drawImageAlphaBlendedInternal(image, (int)xStart, (int)yStart, (int)xEnd, (int)yEnd,
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
             default:
@@ -105,11 +113,10 @@ public class RenderContext extends Bitmap {
                 int thisG = getComponent(i, j, 2) & 0xFF;
                 int thisR = getComponent(i, j, 3) & 0xFF;
 
-                int otherAmt = a;
                 int thisAmt = 255 - a;
-                byte newB = (byte)(thisB * thisAmt + b * otherAmt >> 8);
-                byte newG = (byte)(thisG * thisAmt + g * otherAmt >> 8);
-                byte newR = (byte)(thisR * thisAmt + r * otherAmt >> 8);
+                byte newB = (byte)(thisB * thisAmt + b * a >> 8);
+                byte newG = (byte)(thisG * thisAmt + g * a >> 8);
+                byte newR = (byte)(thisR * thisAmt + r * a >> 8);
 
                 int index = (i + j * width) * 4;
                 setComponent(index + 1, newB);
