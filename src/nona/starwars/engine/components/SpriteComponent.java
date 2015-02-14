@@ -46,7 +46,7 @@ public class SpriteComponent extends EntityComponent {
 
     @Override
     public void render(RenderContext target) {
-        target.drawImage(images.get(currentImage), getPosition(), getEntity().getAABB().getWidth(), getEntity().getAABB().getHeight(), RenderContext.TRANSPARENCY_FULL);
+        target.drawImage(images.get(currentImage), getPos(), getEntity().getAABB().getWidth(), getEntity().getAABB().getHeight(), RenderContext.TRANSPARENCY_FULL);
     }
 
 }

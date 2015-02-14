@@ -88,7 +88,7 @@ public class QuadTree {
         } else {
             QuadTree thisAsNode = new QuadTree(aabb, nodes, entities, numEntities);
 
-            Vector2f direction = entity.getPosition().sub(aabb.getCenter());
+            Vector2f direction = entity.getPos().sub(aabb.getCenter());
 
             nodes = new QuadTree[4];
             numEntities = 0;

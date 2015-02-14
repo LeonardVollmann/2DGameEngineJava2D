@@ -13,8 +13,8 @@ public abstract class EntityComponent {
         return entity;
     }
 
-    public Vector2f getPosition() {
-        return entity.getPosition();
+    public Vector2f getPos() {
+        return entity.getPos();
     }
 
     public void setEntity(Entity entity) {

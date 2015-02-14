@@ -30,11 +30,11 @@ public class Scene {
         while(it.hasNext()) {
             Entity current = (Entity)it.next();
 
-            Vector2f startPosition = current.getPosition();
+            Vector2f startPosition = current.getPos();
 
             current.updateAll(delta);
 
-            if(current.getPosition() != startPosition) {
+            if(current.getPos() != startPosition) {
                 remove(current);
                 add(current);
             }
