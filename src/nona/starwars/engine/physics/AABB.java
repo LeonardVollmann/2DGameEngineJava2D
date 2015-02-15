@@ -1,6 +1,6 @@
 package nona.starwars.engine.physics;
 
-import nona.starwars.engine.core.Vector2f;
+import nona.starwars.engine.maths.Vector2f;
 
 public class AABB {
 

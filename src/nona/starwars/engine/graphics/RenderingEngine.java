@@ -1,12 +1,12 @@
-package nona.starwars.engine.rendering;
+package nona.starwars.engine.graphics;
 
 import nona.starwars.engine.core.Constants;
-import nona.starwars.engine.core.Util;
-import nona.starwars.engine.core.Vector2f;
+import nona.starwars.engine.maths.Maths;
+import nona.starwars.engine.maths.Vector2f;
 
-public class RenderContext extends Bitmap {
+public class RenderingEngine extends Bitmap {
 
-    public RenderContext(int width, int height) {
+    public RenderingEngine(int width, int height) {
         super(width, height);
     }
 
@@ -44,8 +44,8 @@ public class RenderContext extends Bitmap {
             yStart = 1.0f;
         }
 
-        xEnd = Util.clamp(xEnd, -1.0f, 1.0f);
-        yEnd = Util.clamp(yEnd, -1.0f, 1.0f);
+        xEnd = Maths.clamp(xEnd, -1.0f, 1.0f);
+        yEnd = Maths.clamp(yEnd, -1.0f, 1.0f);
 
         xStart = (xStart * scale) + halfWidth;
         yStart = (yStart * scale) + halfHeight;
@@ -136,10 +136,10 @@ public class RenderContext extends Bitmap {
         float xEnd = xStart + rectWidth;
         float yEnd = yStart + rectHeight;
 
-        Util.clamp(xStart, -1.0f, 1.0f);
-        Util.clamp(yStart, -1.0f, 1.0f);
-        Util.clamp(xEnd, -1.0f, 1.0f);
-        Util.clamp(yEnd, -1.0f, 1.0f);
+        Maths.clamp(xStart, -1.0f, 1.0f);
+        Maths.clamp(yStart, -1.0f, 1.0f);
+        Maths.clamp(xEnd, -1.0f, 1.0f);
+        Maths.clamp(yEnd, -1.0f, 1.0f);
 
         xStart = (xStart + 1) / 2 * width;
         yStart = (yStart + 1) / 2 * height;

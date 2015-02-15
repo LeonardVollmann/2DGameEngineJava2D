@@ -1,4 +1,4 @@
-package nona.starwars.engine.core;
+package nona.starwars.engine.maths;
 
 public class Vector2f {
 

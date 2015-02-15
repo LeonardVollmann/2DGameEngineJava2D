@@ -1,6 +1,6 @@
-package nona.starwars.engine.core;
+package nona.starwars.engine.maths;
 
-public class Util {
+public class Maths {
 
     public static float clamp(float value, float min, float max) {
         if(value < min) {

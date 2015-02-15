@@ -1,13 +1,14 @@
-package nona.starwars.engine.core;
+package nona.starwars.engine.entity;
 
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.graphics.RenderingEngine;
 
 public abstract class EntityComponent {
 
     protected Entity entity;
 
     public void update(float delta) {}
-    public void render(RenderContext target) {}
+    public void render(RenderingEngine target) {}
 
     public Entity getEntity() {
         return entity;

@@ -1,6 +1,7 @@
 package nona.starwars.engine.core;
 
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.graphics.RenderingEngine;
+import nona.starwars.engine.scene.Scene;
 
 public abstract class Game {
 
@@ -17,7 +18,7 @@ public abstract class Game {
     }
 
     public abstract void update(float delta);
-    public abstract void render(RenderContext target);
+    public abstract void render(RenderingEngine target);
 
     public CoreEngine getEngine() {
         return engine;

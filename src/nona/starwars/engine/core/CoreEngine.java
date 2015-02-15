@@ -1,6 +1,6 @@
 package nona.starwars.engine.core;
 
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.graphics.RenderingEngine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,7 @@ public class CoreEngine extends Canvas implements Runnable {
     private BufferedImage image;
     private byte[] raster;
 
-    private RenderContext frameBuffer;
+    private RenderingEngine frameBuffer;
 
     public CoreEngine(Game game, int fps) {
         super();
@@ -56,7 +56,7 @@ public class CoreEngine extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
 
-        frameBuffer = new RenderContext(getWidth(), getHeight());
+        frameBuffer = new RenderingEngine(getWidth(), getHeight());
     }
 
     public void start() {

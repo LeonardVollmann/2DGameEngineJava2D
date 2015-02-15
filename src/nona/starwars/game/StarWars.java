@@ -1,15 +1,13 @@
 package nona.starwars.game;
 
-import nona.starwars.engine.components.PhysicsComponent;
-import nona.starwars.engine.components.SpriteComponent;
-import nona.starwars.engine.core.Entity;
+import nona.starwars.engine.graphics.SpriteComponent;
+import nona.starwars.engine.entity.Entity;
 import nona.starwars.engine.core.Game;
-import nona.starwars.engine.core.Vector2f;
-import nona.starwars.engine.rendering.Bitmap;
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.graphics.Bitmap;
+import nona.starwars.engine.graphics.RenderingEngine;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class StarWars extends Game {
 
@@ -45,10 +43,10 @@ public class StarWars extends Game {
         //scene.add(new Entity(new Vector2f(-0.1f, -0.1f), new Vector2f(0.1f, 0.1f)).addComponent(new SpriteComponent("sprite.png")));
         //scene.add(new Entity(new Vector2f(-0.3f, -0.3f), new Vector2f(-0.2f, -0.2f)).addComponent(new SpriteComponent("sprite.png")));
 
-        //scene.add(new Entity(new Vector2f(-0.25f, -0.25f), new Vector2f(0.25f, 0.25f)).addComponent(new SpriteComponent(new Bitmap(16, 16).randomize())));
+        scene.add(new Entity(new Vector2f(-0.25f, -0.25f), new Vector2f(0.25f, 0.25f)).addComponent(new SpriteComponent(new Bitmap(16, 16).randomize())));
         //scene.add(new Entity(new Vector2f(-1.0f, -1.0f), new Vector2f(-0.5f, -0.5f)).addComponent(new SpriteComponent(new Bitmap(16, 16).randomize())).addComponent(new PhysicsComponent()));
 		
-		Random random = new Random();
+		/*Random random = new Random();
 		float size = 0.1f;
         float range = 1;
 		for(int i = 0; i < 25; i++) {
@@ -57,7 +55,7 @@ public class StarWars extends Game {
 			scene.add(new Entity(x, y, size, size)
                     .addComponent(new SpriteComponent("sprite.png"))
                     .addComponent(new PhysicsComponent(new Vector2f((random.nextFloat() - 0.5f) * 2.0f, (random.nextFloat() - 0.5f) * 2.0f))));
-		}
+		}*/
     }
 
     @Override
@@ -66,7 +64,7 @@ public class StarWars extends Game {
     }
 
     @Override
-    public void render(RenderContext target) {
+    public void render(RenderingEngine target) {
         scene.render(target);
     }
 

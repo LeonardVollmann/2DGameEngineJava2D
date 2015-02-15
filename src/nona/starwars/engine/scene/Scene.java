@@ -1,8 +1,11 @@
-package nona.starwars.engine.core;
+package nona.starwars.engine.scene;
 
-import nona.starwars.engine.components.PhysicsComponent;
+import nona.starwars.engine.core.Constants;
+import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.physics.PhysicsComponent;
+import nona.starwars.engine.entity.Entity;
 import nona.starwars.engine.physics.AABB;
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.graphics.RenderingEngine;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,7 +48,7 @@ public class Scene {
         }
     }
 
-    public void render(RenderContext target) {
+    public void render(RenderingEngine target) {
         HashSet<Entity> entitiesToRender = new HashSet<Entity>();
         tree.queryRange(new AABB(-1, -1, 1, 1), entitiesToRender);
 

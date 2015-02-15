@@ -1,9 +1,8 @@
-package nona.starwars.engine.components;
+package nona.starwars.engine.physics;
 
 import nona.starwars.engine.core.Constants;
-import nona.starwars.engine.core.EntityComponent;
-import nona.starwars.engine.core.Vector2f;
-import nona.starwars.engine.physics.AABB;
+import nona.starwars.engine.entity.EntityComponent;
+import nona.starwars.engine.maths.Vector2f;
 
 public class PhysicsComponent extends EntityComponent {
 

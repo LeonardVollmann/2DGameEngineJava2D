@@ -1,7 +1,9 @@
-package nona.starwars.engine.core;
+package nona.starwars.engine.entity;
 
+import nona.starwars.engine.core.CoreEngine;
+import nona.starwars.engine.maths.Vector2f;
 import nona.starwars.engine.physics.AABB;
-import nona.starwars.engine.rendering.RenderContext;
+import nona.starwars.engine.graphics.RenderingEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Entity {
         updateAABB();
     }
 
-    public void renderAll(RenderContext target) {
+    public void renderAll(RenderingEngine target) {
         for(Entity child : children) {
             child.renderAll(target);
         }

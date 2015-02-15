@@ -1,4 +1,4 @@
-package nona.starwars.engine.rendering;
+package nona.starwars.engine.graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
