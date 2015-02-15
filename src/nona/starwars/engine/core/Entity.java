@@ -70,6 +70,16 @@ public class Entity {
         return this;
     }
 
+    public EntityComponent getComponent(String name) {
+        for(int i = 0; i < components.size(); i++) {
+            if(components.get(i).getName() == name) {
+                return components.get(i);
+            }
+        }
+
+        return null;
+    }
+
     public void setParent(Entity parent) {
         this.parent = parent;
     }

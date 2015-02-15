@@ -1,10 +1,12 @@
 package nona.starwars.engine.core;
 
+import nona.starwars.engine.components.PhysicsComponent;
 import nona.starwars.engine.physics.AABB;
 import nona.starwars.engine.rendering.RenderContext;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Scene {
 
@@ -30,6 +32,8 @@ public class Scene {
         while(it.hasNext()) {
             Entity current = (Entity)it.next();
 
+            handleCollisions(current);
+
             Vector2f startPosition = current.getPos();
 
             current.updateAll(delta);
@@ -50,6 +54,25 @@ public class Scene {
             Entity current = (Entity)it.next();
 
             current.renderAll(target);
+        }
+    }
+
+    private void handleCollisions(Entity entity) {
+        PhysicsComponent component = (PhysicsComponent)entity.getComponent(Constants.COMPONENT_PHYSICS);
+        if(component == null) {
+            return;
+        }
+
+        Set<Entity> set = new HashSet<Entity>();
+        tree.queryRange(entity.getAABB(), set);
+
+        Iterator it = set.iterator();
+        while(it.hasNext()) {
+            Entity other = (Entity)it.next();
+            PhysicsComponent otherComponent = (PhysicsComponent)other.getComponent(Constants.COMPONENT_PHYSICS);
+            if(otherComponent != null && otherComponent != component) {
+                component.collide(otherComponent);
+            }
         }
     }
 

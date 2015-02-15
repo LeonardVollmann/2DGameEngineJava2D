@@ -50,8 +50,11 @@ public class StarWars extends Game {
 		
 		Random random = new Random();
 		float size = 0.1f;
-		for(int i = 0; i < 100; i++) {
-			scene.add(new Entity((random.nextFloat() - 0.5f) * 2.0f, (random.nextFloat() - 0.5f) * 2.0f, size, size)
+        float range = 1;
+		for(int i = 0; i < 25; i++) {
+            float x = ((float)Math.random()) * range * 2.0f - range;
+            float y = ((float)Math.random()) * range * 2.0f - range;
+			scene.add(new Entity(x, y, size, size)
                     .addComponent(new SpriteComponent("sprite.png"))
                     .addComponent(new PhysicsComponent(new Vector2f((random.nextFloat() - 0.5f) * 2.0f, (random.nextFloat() - 0.5f) * 2.0f))));
 		}

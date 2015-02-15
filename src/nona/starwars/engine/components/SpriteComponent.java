@@ -52,7 +52,7 @@ public class SpriteComponent extends EntityComponent {
 
     @Override
     public String getName() {
-        return Constants.COMPONENT_PHYSICS;
+        return Constants.COMPONENT_SPRITE;
     }
 
 }

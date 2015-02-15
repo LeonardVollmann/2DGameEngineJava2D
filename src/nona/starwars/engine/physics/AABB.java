@@ -22,8 +22,10 @@ public class AABB {
     }
 
     public boolean intersectRect(Vector2f min, Vector2f max) {
-        return this.min.getX() < max.getX() && this.max.getX() > min.getX()
-                && this.min.getY() < max.getY() && this.max.getY() > min.getY();
+        return this.min.getX() < max.getX()
+                && this.max.getX() > min.getX()
+                && this.min.getY() < max.getY()
+                && this.max.getY() > min.getY();
     }
 
     public boolean intersectRect(float minX, float minY, float maxX, float maxY) {
@@ -34,16 +36,14 @@ public class AABB {
         float distance1 = getMin().getX() - other.getMax().getX();
         float distance2 = other.getMin().getX() - getMax().getX();
 
-        float distance = distance1 > distance2 ? distance1 : distance2;
-        return distance;
+        return distance1 > distance2 ? distance1 : distance2;
     }
 
     public float getDistanceY(AABB other) {
         float distance1 = getMin().getY() - other.getMax().getY();
         float distance2 = other.getMin().getY() - getMax().getY();
 
-        float distance = distance1 > distance2 ? distance1 : distance2;
-        return distance;
+        return distance1 > distance2 ? distance1 : distance2;
     }
 
     public Vector2f getDistance(AABB other) {
