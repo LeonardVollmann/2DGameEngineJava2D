@@ -20,7 +20,7 @@ public class Bitmap {
     }
 
     public Bitmap(String fileName) {
-        fileName = "/" + fileName;
+        fileName = "/res/" + fileName;
 
         BufferedImage image = null;
         try {
