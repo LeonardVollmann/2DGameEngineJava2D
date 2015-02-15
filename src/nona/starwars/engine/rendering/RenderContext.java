@@ -1,13 +1,10 @@
 package nona.starwars.engine.rendering;
 
+import nona.starwars.engine.core.Constants;
 import nona.starwars.engine.core.Util;
 import nona.starwars.engine.core.Vector2f;
 
 public class RenderContext extends Bitmap {
-
-    public static final int TRANSPARENCY_NONE = 0;
-    public static final int TRANSPARENCY_BASIC = 1;
-    public static final int TRANSPARENCY_FULL = 2;
 
     public RenderContext(int width, int height) {
         super(width, height);
@@ -56,15 +53,15 @@ public class RenderContext extends Bitmap {
         yEnd = (yEnd * scale) + halfHeight;
 
         switch(transparency) {
-            case TRANSPARENCY_NONE:
+            case Constants.TRANSPARENCY_NONE:
                 drawImageInternal(image, (int)xStart, (int)yStart, (int)xEnd, (int)yEnd,
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
-            case TRANSPARENCY_BASIC:
+            case Constants.TRANSPARENCY_BASIC:
                 drawImageBasicTransparencyInternal(image, (int)xStart, (int)yStart, (int)xEnd, (int)yEnd,
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;
-            case TRANSPARENCY_FULL:
+            case Constants.TRANSPARENCY_FULL:
                 drawImageAlphaBlendedInternal(image, (int)xStart, (int)yStart, (int)xEnd, (int)yEnd,
                         imageXStart, imageYStart, imageXStep, imageYStep);
                 break;

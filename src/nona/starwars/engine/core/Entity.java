@@ -13,7 +13,6 @@ public class Entity {
     private List<EntityComponent> components;
 
     private Vector2f pos;
-    private Vector2f vel;
     private AABB aabb;
 
     private CoreEngine engine;
@@ -24,7 +23,6 @@ public class Entity {
 
         aabb = new AABB(min, max);
         pos = aabb.getCenter();
-        vel = new Vector2f(1.0f, 1.0f);
     }
 
     public Entity(float xCenter, float yCenter, float width, float height) {
@@ -86,14 +84,6 @@ public class Entity {
 
     public void setPos(Vector2f pos) {
         this.pos = pos;
-    }
-
-    public Vector2f getVel() {
-        return vel;
-    }
-
-    public void setVel(Vector2f vel) {
-        this.vel = vel;
     }
 
     public CoreEngine getEngine() {

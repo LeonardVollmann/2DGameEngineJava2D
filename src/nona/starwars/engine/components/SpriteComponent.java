@@ -1,5 +1,6 @@
 package nona.starwars.engine.components;
 
+import nona.starwars.engine.core.Constants;
 import nona.starwars.engine.core.EntityComponent;
 import nona.starwars.engine.rendering.Bitmap;
 import nona.starwars.engine.rendering.RenderContext;
@@ -46,7 +47,12 @@ public class SpriteComponent extends EntityComponent {
 
     @Override
     public void render(RenderContext target) {
-        target.drawImage(images.get(currentImage), getPos(), getEntity().getAABB().getWidth(), getEntity().getAABB().getHeight(), RenderContext.TRANSPARENCY_FULL);
+        target.drawImage(images.get(currentImage), getPos(), getEntity().getAABB().getWidth(), getEntity().getAABB().getHeight(), Constants.TRANSPARENCY_FULL);
+    }
+
+    @Override
+    public String getName() {
+        return Constants.COMPONENT_PHYSICS;
     }
 
 }

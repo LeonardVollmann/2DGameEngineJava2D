@@ -21,4 +21,6 @@ public abstract class EntityComponent {
         this.entity = entity;
     }
 
+    public abstract String getName();
+
 }

@@ -1,5 +1,0 @@
-mv ./res/ ./bin/
-cd bin
-java nona.starwars.Main
-cd ..
-mv ./bin/res/ .
