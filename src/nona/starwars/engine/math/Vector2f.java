@@ -55,7 +55,7 @@ public class Vector2f {
     }
 
     public float length() {
-        return (float) Maths.sqrt((double) (x * x + y * y));
+        return (float) Math.sqrt((double) (x * x + y * y));
     }
 
     public float squaredLength() {
@@ -67,8 +67,8 @@ public class Vector2f {
     }
 
     public Vector2f rotate(float angle) {
-        x = x * (float) Maths.cos((double) angle) - y * (float) Maths.sin((double) angle);
-        y = y * (float) Maths.sin((double) angle) + x * (float) Maths.sin((double) angle);
+        x = x * (float) Math.cos((double) angle) - y * (float) Math.sin((double) angle);
+        y = y * (float) Math.sin((double) angle) + x * (float) Math.sin((double) angle);
         return this;
     }
 
@@ -81,7 +81,7 @@ public class Vector2f {
     }
 
     public float angle() {
-        return (float) Maths.atan2(y, x);
+        return (float) Math.atan2(y, x);
     }
 
     public float getX() {
