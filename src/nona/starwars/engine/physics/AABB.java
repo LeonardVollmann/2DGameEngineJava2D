@@ -1,6 +1,6 @@
 package nona.starwars.engine.physics;
 
-import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.math.Vector2f;
 
 public class AABB {
 
@@ -70,24 +70,8 @@ public class AABB {
         this.min = min;
     }
 
-    public void setMinX(float minX) {
-        min.setX(minX);
-    }
-
-    public void setMinY(float minY) {
-        min.setY(minY);
-    }
-
     public Vector2f getMax() {
         return max;
-    }
-
-    public void setMaxX(float maxX) {
-        max.setX(maxX);
-    }
-
-    public void setMaxY(float maxY) {
-        max.setY(maxY);
     }
 
     public void setMax(Vector2f max) {

@@ -1,7 +1,7 @@
 package nona.starwars.engine.entity;
 
 import nona.starwars.engine.core.CoreEngine;
-import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.math.Vector2f;
 import nona.starwars.engine.physics.AABB;
 import nona.starwars.engine.graphics.RenderingEngine;
 

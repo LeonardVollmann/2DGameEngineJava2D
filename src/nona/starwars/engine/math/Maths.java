@@ -1,4 +1,4 @@
-package nona.starwars.engine.maths;
+package nona.starwars.engine.math;
 
 public class Maths {
 

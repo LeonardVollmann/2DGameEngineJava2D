@@ -1,8 +1,8 @@
 package nona.starwars.engine.graphics;
 
 import nona.starwars.engine.core.Constants;
-import nona.starwars.engine.maths.Maths;
-import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.math.Maths;
+import nona.starwars.engine.math.Vector2f;
 
 public class RenderingEngine extends Bitmap {
 

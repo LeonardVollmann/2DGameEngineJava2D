@@ -1,7 +1,7 @@
 package nona.starwars.engine.scene;
 
 import nona.starwars.engine.core.Constants;
-import nona.starwars.engine.maths.Vector2f;
+import nona.starwars.engine.math.Vector2f;
 import nona.starwars.engine.physics.PhysicsComponent;
 import nona.starwars.engine.entity.Entity;
 import nona.starwars.engine.physics.AABB;
