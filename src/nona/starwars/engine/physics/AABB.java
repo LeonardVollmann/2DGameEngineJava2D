@@ -32,6 +32,31 @@ public class AABB {
         return intersectRect(new Vector2f(minX, minY), new Vector2f(maxX, maxY));
     }
 
+    public boolean intersectBoundingSphere(BoundingSphere other) {
+        Vector2f pos = other.getPos();
+
+        float distance = 0;
+        float s;
+
+        if(pos.getX() < min.getX()) {
+            s = pos.getX() - min.getX();
+            distance += s * s;
+        } else if(pos.getX() > max.getX()) {
+            s = pos.getX() - max.getX();
+            distance += s * s;
+        }
+
+        if(pos.getY() < min.getY()) {
+            s = pos.getY() - min.getY();
+            distance += s * s;
+        } else if(pos.getY() > max.getY()) {
+            s = pos.getY() - max.getY();
+            distance += s * s;
+        }
+
+        return distance <= other.getRadius() * other.getRadius();
+    }
+
     public float getDistanceX(AABB other) {
         float distance1 = getMin().getX() - other.getMax().getX();
         float distance2 = other.getMin().getX() - getMax().getX();

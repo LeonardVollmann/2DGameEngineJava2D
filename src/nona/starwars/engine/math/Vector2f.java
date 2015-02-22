@@ -58,8 +58,19 @@ public class Vector2f {
         return (float) Math.sqrt((double) (x * x + y * y));
     }
 
-    public float squaredLength() {
+    public float lengthSquared() {
         return x * x + y * y;
+    }
+
+    public float distance(Vector2f other) {
+        return (float)Math.sqrt(distanceSquared(other));
+    }
+
+    public float distanceSquared(Vector2f other) {
+        float distX = x - other.getX();
+        float distY = y - other.getY();
+
+        return distX * distX + distY * distY;
     }
 
     public Vector2f normalized() {
